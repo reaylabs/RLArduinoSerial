@@ -1,0 +1,18 @@
+# Syntax Colouring Map For RLArduinoAnalog
+
+# Data types (KEYWORD1)
+RLArduinoSerial	KEYWORD1
+
+# Methods and Functions (KEYWORD2)
+doubleAvailable KEYWORD2
+floatAvailable KEYWORD2
+getDouble KEYWORD2
+getFloat KEYWORD2
+getString KEYWORD2
+getLong KEYWORD2
+getTerminator KEYWORD2
+longAvailable KEYWORD2
+setTerminator KEYWORD2
+stringAvailable KEYWORD2
+
+# Constants (LITERAL1)
