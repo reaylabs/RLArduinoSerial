@@ -32,7 +32,7 @@ Revision History
 
 #include "RLArduinoSerial.h"
 
-//Global Constants
+//Create the RLArduinoSerial Object
 RLArduinoSerial s('\n');  
 
 void setup() {

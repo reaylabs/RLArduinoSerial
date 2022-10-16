@@ -1,9 +1,4 @@
 # RLArduinoSerial
-Non-blocking serial class.
-
-To install this library, download the .zip file and move the decompressed folder to Documents/Arduino/libraries/. 
-
-## Description
 The RLArduinoSerial class implements a non-blocking serial read function.
 Whenever one of the Available functions is called, all characters in the 
 Arduino Serial input buffer will be read into an internal buffer. When
@@ -14,34 +9,33 @@ can then be retrieved using the get function and will then reset the
 available flag until a new data set is received and the available flags
 updated.
 
- Input Examples:
+ Data Type Examples:
 
-   input type    input string         output types
-   ----------   -------------  -------------------------
-    integer       "123"         long,float,double,string
-    binary        "0b1011"      long,string
-    hex           "0xFF"        long,string
-    float         "1.23e-9"     float,double,string
-    string        "ABCDEF$%"    string
+    Input Type    Input Value        Output Type        
+      integer       "123"         long,float,double,string
+      binary        "0b1011"      long,string
+      hex           "0xFF"        long,string
+      float         "1.23e-9"     float,double,string
+      string        "ABCDEF$%"    string
 
 ## Class RLArduinoSerial
 ```C++
 explicit  RLArduinoSerial(char terminator);
-bool doubleAvailable();
-bool  floatAvailable();
-double getDouble();
-float getFloat();
-String getString();
-long getLong();
-char getTerminator();
-bool longAvailable();
-void setTerminator(char terminator);
-bool stringAvailable();
+bool      doubleAvailable();
+bool      floatAvailable();
+double    getDouble();
+float     getFloat();
+long      getLong();
+String    getString();
+char      getTerminator();
+bool      longAvailable();
+void      setTerminator(char terminator);
+bool      stringAvailable();
 ```
 
 ## Example
 ```C++
-//Global Constants
+//Create the RLArduinoSerial Object
 RLArduinoSerial s('\n');  
 
 void setup() {
