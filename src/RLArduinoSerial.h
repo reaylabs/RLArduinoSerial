@@ -21,16 +21,17 @@ Revision History
 class RLArduinoSerial {
   public:
     explicit  RLArduinoSerial(char terminator);
-    bool doubleAvailable();
-    bool  floatAvailable();
+    void checkForData();
+    bool doubleAvailable(bool runCheckForData = false);
+    bool  floatAvailable(bool runCheckForData = false);
     double getDouble();
     float getFloat();
     String getString();
     long getLong();
     char getTerminator();
-    bool longAvailable();
+    bool longAvailable(bool runCheckForData = false);
     void setTerminator(char terminator);
-    bool stringAvailable();
+    bool stringAvailable(bool runCheckForData = false);
   
   private:
     bool _convertToDouble(char *buffer, double *value, char terminator);
@@ -48,7 +49,6 @@ class RLArduinoSerial {
     bool _longAvailable;
     long _longValue;
     char _terminator;
-    void _parseInput();
     void _reset();
     bool _stringAvailable;
     String _stringValue;

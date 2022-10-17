@@ -4,6 +4,7 @@
 RLArduinoSerial	KEYWORD1
 
 # Methods and Functions (KEYWORD2)
+checkForData KEYWORD2
 doubleAvailable KEYWORD2
 floatAvailable KEYWORD2
 getDouble KEYWORD2

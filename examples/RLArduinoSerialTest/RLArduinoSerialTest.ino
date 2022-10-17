@@ -4,24 +4,25 @@ RLArduinoSerialTest.ino
 Description
   Test of the RLArduinoSerial class.
 
-  The RLArduinoSerial class implements a non-blocking serial read function.
-  Whenever one of the Available functions is called, all characters in the 
-  Arduino Serial input buffer will be read into an internal buffer. When
-  the termination character is found, an attempt will be made to convert
-  the buffer data into a long, float, double or String. If the conversion is 
-  successful, the appropriate available flag will be set. The value
-  can then be retrieved using the get function will then reset the
-  available flag until a new data set is received and the available flags
-  updated.
+  The RLArduinoSerial class implements a blocking or non-blocking serial read function.
+Whenever the checkForData() function or the stringAvailable(true), longAvailable(true),
+floatAvailable(true), doubleAvailable(true) functions are called, all characters in the 
+Arduino Serial input buffer will be read into an internal buffer. When the
+the termination character is found, an attempt will be automatically made to convert
+the buffer data into a long, float, double or String. The appropriate xxxxAvailable() 
+function with no parameter can check if the conversion was successful without running
+the checkForData function. The value can then be retrieved by calling the appropriate 
+getxxxx function which will then reset the available flag until a new data set is received 
+and the available flags updated. 
 
-  Input Examples :
-   input type    input string         output types
-   ----------   -------------  -------------------------
-    integer       "123"         long,float,double,string
-    binary        "0b1011"      long,string
-    hex           "0xFF"        long,string
-    float         "1.23e-9"     float,double,string
-    string        "ABCDEF$%"    string
+  Data Type Examples:
+
+    Input Type    Input Value        Output Type        
+      integer       "123"         long,float,double,string
+      binary        "0b1011"      long,string
+      hex           "0xFF"        long,string
+      float         "1.23e-9"     float,double,string
+      string        "ABCDEF$%"    string
 
 Author
   Robert Reay
@@ -41,41 +42,51 @@ void setup() {
 }
 
 void loop() {
-  //speedTest();
-  parseTest();
+  runNonBlockingExample();
+  //runBlockingExample();
+  //runSpeedTest();
 }
 
-void parseTest()
+// Send following string to test this routine:
+// 123!-456!0xFF!0b1011!1.234567890123456!-4.5e3!ABC#$%!
+void runNonBlockingExample()
 {
-  //Test each of the parsing routines
+  s.setTerminator('!');
+  s.checkForData();
+  if (s.stringAvailable())
+  {
+    Serial.print("\nString: ");
+    Serial.println(s.getString());
+  }
   if (s.longAvailable())
   {
-    long l = s.getLong();
-    Serial.println((String)"Long Found: " + l);
+    Serial.print("Long: ");
+    Serial.println(s.getLong());
   }
   if (s.floatAvailable())
   {
-    float f = s.getFloat();
-    Serial.print("Float Found: ");
-    Serial.println(f,12);
+    Serial.print("Float:  ");
+    Serial.println(s.getFloat(),15);
   }
   if (s.doubleAvailable())
   {
-    double d = s.getDouble();
-    Serial.print("Double Found: ");
-    Serial.println(d,12);
-  }
-  if (s.stringAvailable())
-  {
-    String st = s.getString();
-    Serial.print("String Found: ");
-    Serial.println(st);
+    Serial.print("Double: ");
+    Serial.println(s.getDouble(),15);
   }
 
-  //Do something else here while wating for input
+  //Do something here while waiting for input
 }
 
-void speedTest()
+void runBlockingExample()
+{
+  s.setTerminator('\n');
+  Serial.print("Enter A Float Value : ");
+  while(!s.floatAvailable(true));     //blocking
+  Serial.println(s.getFloat(),10);
+  Serial.println();
+}
+
+void runSpeedTest()
 {
   //Determine the speed of the parsing routine
   long start = micros();

@@ -70,15 +70,15 @@ bool RLArduinoSerial::_convertToLong(char *buffer, long *value, char terminator)
   return convertOK;
 }
 
-bool RLArduinoSerial::doubleAvailable()
+bool RLArduinoSerial::doubleAvailable(bool runCheckForData)
 {
-  _parseInput();
+  if (runCheckForData) checkForData();
   return _doubleAvailable;
 }
 
-bool RLArduinoSerial::floatAvailable()
+bool RLArduinoSerial::floatAvailable(bool runCheckForData)
 {
-  _parseInput();
+  if (runCheckForData) checkForData();
   return _floatAvailable;
 }
 
@@ -132,16 +132,18 @@ char RLArduinoSerial::getTerminator()
   return _terminator;
 }
 
-bool RLArduinoSerial::longAvailable()
+bool RLArduinoSerial::longAvailable(bool runCheckForData)
 {
-  _parseInput();
+  if (runCheckForData) checkForData();
   return _longAvailable;
 }
 
-void RLArduinoSerial::_parseInput()
+void RLArduinoSerial::checkForData()
 {
+  _foundTerminator = false;
+
   //Parse the Serial input buffer
-  while (Serial.available() > 0)
+  while ((Serial.available() > 0) && !_foundTerminator)
   {
     char c = (char)Serial.read(); 
 
@@ -165,7 +167,8 @@ void RLArduinoSerial::_parseInput()
     //Look for the terminator character
     if (c == _terminator)
     {
-    
+      _foundTerminator = true;
+
       //Try conversion to long
       long newLong;
       if (_convertToLong(_inputBuffer, &newLong, _terminator))
@@ -190,7 +193,7 @@ void RLArduinoSerial::_parseInput()
         _doubleValue = newDouble;
       }
 
-      //Get the string
+      //String is now available
       _stringAvailable = true;
 
       //Clear the input buffer since the termination character was found
@@ -215,8 +218,11 @@ void RLArduinoSerial::setTerminator(char terminator)
   _terminator = terminator;
 }
 
-bool RLArduinoSerial::stringAvailable()
+bool RLArduinoSerial::stringAvailable(bool runCheckForData)
 {
-  _parseInput();
+  if (runCheckForData)
+  {
+    checkForData();
+  } 
   return _stringAvailable;
 }
