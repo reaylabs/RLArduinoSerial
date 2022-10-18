@@ -72,13 +72,21 @@ bool RLArduinoSerial::_convertToLong(char *buffer, long *value, char terminator)
 
 bool RLArduinoSerial::doubleAvailable(bool runCheckForData)
 {
-  if (runCheckForData) checkForData();
+  if (runCheckForData)
+  {
+    _reset();
+    checkForData();
+  }
   return _doubleAvailable;
 }
 
 bool RLArduinoSerial::floatAvailable(bool runCheckForData)
 {
-  if (runCheckForData) checkForData();
+  if (runCheckForData)
+  {
+    _reset();
+    checkForData();
+  }
   return _floatAvailable;
 }
 
@@ -134,7 +142,11 @@ char RLArduinoSerial::getTerminator()
 
 bool RLArduinoSerial::longAvailable(bool runCheckForData)
 {
-  if (runCheckForData) checkForData();
+  if (runCheckForData) 
+  {
+    _reset();
+    checkForData();
+  }
   return _longAvailable;
 }
 
@@ -210,7 +222,11 @@ void RLArduinoSerial::_reset()
     _floatAvailable = false;
     _longAvailable = false;
     _stringAvailable = false;
+    _longValue = 0;
+    _doubleValue = 0;
+    _longValue = 0;
     _inputIndex = 0;
+    _inputBuffer[0] = '\0';
 }
 
 void RLArduinoSerial::setTerminator(char terminator)
@@ -222,7 +238,8 @@ bool RLArduinoSerial::stringAvailable(bool runCheckForData)
 {
   if (runCheckForData)
   {
+    _reset();
     checkForData();
-  } 
+  }
   return _stringAvailable;
 }
