@@ -14,9 +14,10 @@ Revision History
 #include "RLArduinoSerial.h"
 
 //Constructor
-RLArduinoSerial::RLArduinoSerial(char terminator)
+RLArduinoSerial::RLArduinoSerial(char terminator, int timeout)
 {
   _terminator = terminator;
+  _timeout = timeout;
   _reset();
 }
 
@@ -234,6 +235,11 @@ void RLArduinoSerial::setTerminator(char terminator)
   _terminator = terminator;
 }
 
+void RLArduinoSerial::setTimeout(int timeout)
+{
+  _timeout = timeout; // in milliseconds
+}
+
 bool RLArduinoSerial::stringAvailable(bool runCheckForData)
 {
   if (runCheckForData)
@@ -242,4 +248,84 @@ bool RLArduinoSerial::stringAvailable(bool runCheckForData)
     checkForData();
   }
   return _stringAvailable;
+}
+
+bool RLArduinoSerial::waitForDoubleWithTimeout(double *value, FunctionPointer callback)
+{
+  bool success = false;
+  long startTime = millis();
+  while (!success && (millis() - startTime) < _timeout)
+  {
+    if (doubleAvailable(true))
+    {
+      *value = getDouble();
+      success = true;
+    } else {
+      if (callback != NULL)
+      {
+        callback();
+      }
+    }
+  }
+  return success;
+}
+
+bool RLArduinoSerial::waitForFloatWithTimeout(float *value, FunctionPointer callback)
+{
+  bool success = false;
+  long startTime = millis();
+  while (!success && (millis() - startTime) < _timeout)
+  {
+    if (floatAvailable(true))
+    {
+      *value = getFloat();
+      success = true;
+    } else {
+      if (callback != NULL)
+      {
+        callback();
+      }
+    }
+  }
+  return success;
+}
+
+bool RLArduinoSerial::waitForLongWithTimeout(long *value, FunctionPointer callback)
+{
+  bool success = false;
+  long startTime = millis();
+  while (!success && (millis() - startTime) < _timeout)
+  {
+    if (longAvailable(true))
+    {
+      *value = getLong();
+      success = true;
+    } else {
+      if (callback != NULL)
+      {
+        callback();
+      }
+    }
+  }
+  return success;
+}
+
+bool RLArduinoSerial::waitForStringWithTimeout(String *value, FunctionPointer callback)
+{
+  bool success = false;
+  long startTime = millis();
+  while (!success && (millis() - startTime) < _timeout)
+  {
+    if (stringAvailable(true))
+    {
+      *value = getString();
+      success = true;
+    } else {
+      if (callback != NULL)
+      {
+        callback();
+      }
+    }
+  }
+  return success;
 }

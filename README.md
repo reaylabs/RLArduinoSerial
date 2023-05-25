@@ -9,6 +9,9 @@ if the relavent conversion was successful. The variable value can then be retrie
 calling the appropriate getxxxx() function which will then reset the available 
 flag until a new data set is received and the available flags updated. 
 
+  The class also implements wait for data functions with a time out and ability
+  to run a callback function while waiting for data.
+
 Data Type Examples:
 
 | **Input Type** 	| **Input Value** 	| **Output Type**             	|
@@ -32,7 +35,12 @@ String    getString();
 char      getTerminator();
 bool      longAvailable(bool runCheckForData = false);
 void      setTerminator(char terminator);
+void      setTimeout(int timeout); //milli seconds
 bool      stringAvailable(bool runCheckForData = false);
+bool      waitForDoubleWithTimeout(double *value, FunctionPointer callback);
+bool      waitForFloatWithTimeout(float *value, FunctionPointer callback);
+bool      waitForLongWithTimeout(long *value, FunctionPointer callback);
+bool      waitForStringWithTimeout(String *value, FunctionPointer callback);
 ```
 
 ## Non-Blocking Example
@@ -82,5 +90,34 @@ void loop() {
   while(!s.floatAvailable(true));   
   Serial.println(s.getFloat(),10);
   Serial.println();
+}
+```
+## Wait For Long Value With Callback Example
+```C++
+#include "RLArduinoSerial.h"
+
+RLArduinoSerial s('\n', 10000);  //Create a RLArduinoSerial object with timeout and callback
+
+void setup() {
+  Serial.begin(9600);
+  while(!Serial);
+}
+
+void loop() {
+  //Wait for a String value while running the callback function while waiting
+  String stringValue;
+  Serial.println("\nEnter A StringValue With Callback Function : ");
+  if (s.waitForStringWithTimeout(&stringValue, callbackFunction)) {
+    Serial.println(stringValue);
+  } else {
+    Serial.println("timeout");
+  }
+  Serial.println("Press the Enter key to continue");
+  while(!s.stringAvailable(true));
+}
+
+void callbackFunction() {
+  delay(500);
+  Serial.println("Callback");
 }
 ```

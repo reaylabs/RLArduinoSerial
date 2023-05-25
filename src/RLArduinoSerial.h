@@ -18,9 +18,11 @@ Revision History
 
 #define inputBufferSize 64
 
+typedef void (*FunctionPointer)(void);
+
 class RLArduinoSerial {
   public:
-    explicit  RLArduinoSerial(char terminator);
+    explicit  RLArduinoSerial(char terminator, int timeout = 1000);
     void checkForData();
     bool doubleAvailable(bool runCheckForData = false);
     bool  floatAvailable(bool runCheckForData = false);
@@ -31,7 +33,12 @@ class RLArduinoSerial {
     char getTerminator();
     bool longAvailable(bool runCheckForData = false);
     void setTerminator(char terminator);
+    void setTimeout(int timeout);
     bool stringAvailable(bool runCheckForData = false);
+    bool waitForDoubleWithTimeout(double *value, FunctionPointer callback);
+    bool waitForFloatWithTimeout(float *value, FunctionPointer callback);
+    bool waitForLongWithTimeout(long *value, FunctionPointer callback);
+    bool waitForStringWithTimeout(String *value, FunctionPointer callback);
   
   private:
     bool _convertToDouble(char *buffer, double *value, char terminator);
@@ -49,6 +56,7 @@ class RLArduinoSerial {
     bool _longAvailable;
     long _longValue;
     char _terminator;
+    int _timeout;
     void _reset();
     bool _stringAvailable;
     String _stringValue;
