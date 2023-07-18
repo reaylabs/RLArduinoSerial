@@ -17,6 +17,7 @@ Revision History
 #include "Arduino.h"
 
 #define inputBufferSize 64
+#define LIB_VERSION  (F("1.0.0"))
 
 typedef void (*FunctionPointer)(void);
 

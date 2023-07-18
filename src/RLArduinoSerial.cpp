@@ -2,7 +2,7 @@
 RLArduinoSerial.cpp
 
 Description
-  Non-blocking serial class
+  Arduino serial communition helper class
 
 Author
   Robert Reay

@@ -17,3 +17,4 @@ setTerminator KEYWORD2
 stringAvailable KEYWORD2
 
 # Constants (LITERAL1)
+LIB_VERSION	LITERAL1
