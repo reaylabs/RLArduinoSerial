@@ -17,8 +17,9 @@ Author
 RLArduinoSerial s('\n', 10000);  //Create a RLArduinoSerial object with the termintor = \n and timeout = 10000 ms
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   while(!Serial);
+  Serial.println("RLArduinoSerial Version: " + s.version()+ "\n");
 }
 
 void loop() {

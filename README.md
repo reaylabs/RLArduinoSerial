@@ -37,6 +37,7 @@ bool      longAvailable(bool runCheckForData = false);
 void      setTerminator(char terminator);
 void      setTimeout(int timeout); //milli seconds
 bool      stringAvailable(bool runCheckForData = false);
+String    version();
 bool      waitForDoubleWithTimeout(double *value, FunctionPointer callback);
 bool      waitForFloatWithTimeout(float *value, FunctionPointer callback);
 bool      waitForLongWithTimeout(long *value, FunctionPointer callback);
@@ -52,8 +53,9 @@ RLArduinoSerial s('\n');  //Create a RLArduinoSerial object
 long loopCount = 0;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   while(!Serial);
+  Serial.println("RLArduinoSerial Version: " + s.version()+ "\n");
   loopCount = 0;
 }
 
@@ -77,17 +79,17 @@ void loop() {
 ```C++
 #include "RLArduinoSerial.h"
 
-RLArduinoSerial s('\n');  //Create a RLArduinoSerial object 
+RLArduinoSerial s('\n');  //Create a RLArduinoSerial object with the termintor = \n
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   while(!Serial);
+  Serial.println("RLArduinoSerial Version: " + s.version()+ "\n");
 }
 
 void loop() {
   Serial.print("Enter A Float Value : ");
-  //Parse the Serial input buffer and check for a Float
-  while(!s.floatAvailable(true));   
+  while(!s.floatAvailable(true));   //Parse the Serial input buffer and check for a Float
   Serial.println(s.getFloat(),10);
   Serial.println();
 }
@@ -99,8 +101,9 @@ void loop() {
 RLArduinoSerial s('\n', 10000);  //Create a RLArduinoSerial object with timeout and callback
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   while(!Serial);
+  Serial.println("RLArduinoSerial Version: " + s.version()+ "\n");
 }
 
 void loop() {

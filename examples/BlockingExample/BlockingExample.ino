@@ -19,8 +19,9 @@ Author
 RLArduinoSerial s('\n');  //Create a RLArduinoSerial object with the termintor = \n
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   while(!Serial);
+  Serial.println("RLArduinoSerial Version: " + s.version()+ "\n");
 }
 
 void loop() {

@@ -17,7 +17,6 @@ Revision History
 #include "Arduino.h"
 
 #define inputBufferSize 64
-#define LIB_VERSION  (F("1.0.0"))
 
 typedef void (*FunctionPointer)(void);
 
@@ -36,6 +35,7 @@ class RLArduinoSerial {
     void setTerminator(char terminator);
     void setTimeout(int timeout);
     bool stringAvailable(bool runCheckForData = false);
+    String version();
     bool waitForDoubleWithTimeout(double *value, FunctionPointer callback);
     bool waitForFloatWithTimeout(float *value, FunctionPointer callback);
     bool waitForLongWithTimeout(long *value, FunctionPointer callback);
@@ -60,6 +60,7 @@ class RLArduinoSerial {
     int _timeout;
     void _reset();
     bool _stringAvailable;
+    const String _version = F("1.1.0");
     String _stringValue;
 };
 

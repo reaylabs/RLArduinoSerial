@@ -250,6 +250,11 @@ bool RLArduinoSerial::stringAvailable(bool runCheckForData)
   return _stringAvailable;
 }
 
+String RLArduinoSerial::version()
+{
+  return _version;
+}
+
 bool RLArduinoSerial::waitForDoubleWithTimeout(double *value, FunctionPointer callback)
 {
   bool success = false;
