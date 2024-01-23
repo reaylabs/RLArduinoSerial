@@ -14,3 +14,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add the version() function
 - Update the keywords
 - Update the examaples with the version() function
+
+## [1.2.0] - 2024-01-23
+- Add the SerialCommandInfo structure
+- Added the printMenu function
+- Added the printMenuExample

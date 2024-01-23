@@ -216,6 +216,18 @@ void RLArduinoSerial::checkForData()
   }
 }
 
+void RLArduinoSerial::printMenu(SerialCommandInfo *menu, uint16_t menuSize)
+{
+  Serial.println("\n*** Commands ***");
+  for (int i = 0; i < menuSize; i++)
+  {
+    Serial.print(menu[i].command);
+    Serial.print(": ");
+    Serial.println(menu[i].title);
+  }
+  Serial.print("Enter Command: ");
+}
+
 void RLArduinoSerial::_reset()
 {
     _foundTerminator = false;

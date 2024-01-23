@@ -13,6 +13,8 @@ getString KEYWORD2
 getLong KEYWORD2
 getTerminator KEYWORD2
 longAvailable KEYWORD2
+printMenu   KEYWORD2
+SerialCommandInfo KEYWORD2
 setTerminator KEYWORD2
 stringAvailable KEYWORD2
 version KEYWORD2
