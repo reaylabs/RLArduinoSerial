@@ -20,13 +20,6 @@ Revision History
 
 typedef void (*FunctionPointer)(void);
 
-//Menu function structure
-struct SerialCommandInfo {
-  uint16_t command;
-  const char* title;
-  void (*functionPointer)();
-};
-
 class RLArduinoSerial {
   public:
     explicit  RLArduinoSerial(char terminator, int timeout = 1000);
@@ -39,7 +32,6 @@ class RLArduinoSerial {
     long getLong();
     char getTerminator();
     bool longAvailable(bool runCheckForData = false);
-    void printMenu(SerialCommandInfo *menu, uint16_t menuSize);
     void setTerminator(char terminator);
     void setTimeout(int timeout);
     bool stringAvailable(bool runCheckForData = false);
@@ -68,7 +60,7 @@ class RLArduinoSerial {
     int _timeout;
     void _reset();
     bool _stringAvailable;
-    const String _version = F("1.2.0");
+    const String _version = F("1.3.0");
     String _stringValue;
 };
 

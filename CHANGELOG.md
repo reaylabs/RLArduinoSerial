@@ -19,3 +19,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add the SerialCommandInfo structure
 - Added the printMenu function
 - Added the printMenuExample
+
+## [1.3.0] - 2024-01-24
+- Removed the SerialCommandInfo and printMenu functions and exanples
+- The functinality will be added to the new RLArduinoInstrument class
+

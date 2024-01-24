@@ -34,7 +34,6 @@ long      getLong();
 String    getString();
 char      getTerminator();
 bool      longAvailable(bool runCheckForData = false);
-void      printMenu(SerialCommandInfo *menu, uint16_t menuSize);
 void      setTerminator(char terminator);
 void      setTimeout(int timeout); //milli seconds
 bool      stringAvailable(bool runCheckForData = false);
