@@ -13,6 +13,8 @@ getString KEYWORD2
 getLong KEYWORD2
 getTerminator KEYWORD2
 longAvailable KEYWORD2
+printEngineeringFormat KEYWORD2
+printlnEngineeringFormat KEYWORD2
 SerialCommandInfo KEYWORD2
 setTerminator KEYWORD2
 stringAvailable KEYWORD2

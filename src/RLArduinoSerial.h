@@ -17,6 +17,7 @@ Revision History
 #include "Arduino.h"
 
 #define inputBufferSize 64
+#define RL_ARDUINO_SERIAL_LIB_VERSION  (F("1.5.0"))
 
 typedef void (*FunctionPointer)(void);
 
@@ -32,6 +33,8 @@ class RLArduinoSerial {
     long getLong();
     char getTerminator();
     bool longAvailable(bool runCheckForData = false);
+    void printEngineeringFormat(float value, int totalDigits, String units = "", int minRange = -12);
+    void printlnEngineeringFormat(float value, int totalDigits, String units = "", int minRange = -12);
     void setTerminator(char terminator);
     void setTimeout(int timeout);
     bool stringAvailable(bool runCheckForData = false);

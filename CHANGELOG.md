@@ -24,3 +24,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Removed the SerialCommandInfo and printMenu functions and exanples
 - The functinality will be added to the new RLArduinoInstrument class
 
+## [1.4.0] - 2024-04-24
+- Added the printEngineeringFormat commands
+
+## [1.5.0] - 2024-05-01
+- Added the minRange function to the printEngineeringFormat command
+- Modified the printEngineeringString example

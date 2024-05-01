@@ -216,6 +216,107 @@ void RLArduinoSerial::checkForData()
   }
 }
 
+
+
+void RLArduinoSerial::printEngineeringFormat(float value, int totalDigits, String units, int minRange)
+{
+ float multiplier = pow(10,totalDigits + 1);
+ int range = 0;
+ if (abs(value) >= 1.0) {
+    // Array of suffixes for engineering notation
+    char psuffixes[] = {' ', 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'};
+    
+    // Find the appropriate suffix and adjust the value accordingly
+    int index = 0;
+    //value = round(value * multiplier) / multiplier;
+    while (abs(value) >= 1000.0 && index < sizeof(psuffixes) - 1) {
+      value /= 1000.0;
+      index++;
+      range += 3;
+    }
+
+    // Calculate the number of digits before the decimal point
+    
+    int digitsBeforeDecimal;
+    if (abs(value) >= 100.0) digitsBeforeDecimal = 3;
+    else if (abs(value) >= 10.0) digitsBeforeDecimal = 2;
+    else digitsBeforeDecimal = 1;
+    
+    
+    // Calculate the number of digits after the decimal point
+    int digitsAfterDecimal = totalDigits - digitsBeforeDecimal;
+   if (range  -  minRange < digitsAfterDecimal) {
+      digitsAfterDecimal = range - minRange;
+    }
+    if (digitsAfterDecimal < 0) digitsAfterDecimal = 0;
+
+     if (range - minRange < 0) {
+      value = 0,0;
+    }
+  
+    //look for zero
+    bool isZero = false;
+    if (value == 0.0) isZero = true;
+    
+    // Print the value with the specified number of digits and the appropriate suffix
+    Serial.print(value, digitsAfterDecimal);
+    if(psuffixes[index] != ' ') {
+      Serial.print(psuffixes[index]);
+    }
+    Serial.print(units);
+  } else {
+    
+   // Array of suffixes for engineering notation
+    char nsuffixes[] = {' ', 'm', 'u', 'n', 'p', 'f', 'a', 'z', 'y'};
+    
+    // Find the appropriate suffix and adjust the value accordingly
+    int index = 0;
+    //value = round(value * multiplier) / multiplier;
+    while (abs(value) < 1.0 && index < sizeof(nsuffixes) - 1) {
+      value *= 1000.0;
+      index++;
+      range -= 3;
+    }
+
+    int digitsBeforeDecimal;
+    if (abs(value) >= 100.0) digitsBeforeDecimal = 3;
+    else if (abs(value) >= 10.0) digitsBeforeDecimal = 2;
+    else digitsBeforeDecimal = 1;
+    
+    
+    // Calculate the number of digits after the decimal point
+    int digitsAfterDecimal = totalDigits - digitsBeforeDecimal;
+
+    if (range  -  minRange < digitsAfterDecimal) {
+      digitsAfterDecimal = range - minRange;
+    }
+
+    if (digitsAfterDecimal < 0) digitsAfterDecimal = 0;
+
+    if (range - minRange < 0) {
+      value = 0,0;
+    }
+  
+    //look for zero
+    bool isZero = false;
+    if (value == 0.0) isZero = true;
+    
+    // Print the value with the specified number of digits and the appropriate suffix
+    Serial.print(value, digitsAfterDecimal);
+    if(nsuffixes[index] != ' ' && !isZero) {
+      Serial.print(nsuffixes[index]);
+    }
+    Serial.print(units);
+  }
+}
+
+
+void RLArduinoSerial::printlnEngineeringFormat(float value, int totalDigits, String units, int minRange) {
+  printEngineeringFormat(value,totalDigits,units, minRange);
+  Serial.println();
+}
+
+
 void RLArduinoSerial::_reset()
 {
     _foundTerminator = false;

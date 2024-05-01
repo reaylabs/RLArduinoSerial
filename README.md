@@ -34,6 +34,8 @@ long      getLong();
 String    getString();
 char      getTerminator();
 bool      longAvailable(bool runCheckForData = false);
+void      printEngineeringFormat(float value, int totalDigits, String units = "", int minRange = -12);
+void      printlnEngineeringFormat(float value, int totalDigits, String units = "", int minRange = -12);
 void      setTerminator(char terminator);
 void      setTimeout(int timeout); //milli seconds
 bool      stringAvailable(bool runCheckForData = false);
